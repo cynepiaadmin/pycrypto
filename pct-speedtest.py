@@ -233,7 +233,7 @@ class Benchmark:
     def test_hmac_small(self, mac_name, hmac_constructor, digestmod, digest_size):
         keys = iter(self.random_keys(digest_size))
         if sys.version_info[0] == 2:
-            mac_constructor = lambda data=None: hmac_constructor(keys.next(), data, digestmod)
+            mac_constructor = lambda data=None: hmac_constructor(next(keys), data, digestmod)
         else:
             mac_constructor = lambda data=None: hmac_constructor(keys.__next__(), data, digestmod)
         self.test_hash_small(mac_name, mac_constructor, digest_size)
@@ -246,7 +246,7 @@ class Benchmark:
     def test_cmac_small(self, mac_name, cmac_constructor, ciphermod, key_size):
         keys = iter(self.random_keys(key_size))
         if sys.version_info[0] == 2:
-            mac_constructor = lambda data=None: cmac_constructor(keys.next(), data, ciphermod)
+            mac_constructor = lambda data=None: cmac_constructor(next(keys), data, ciphermod)
         else:
             mac_constructor = lambda data=None: cmac_constructor(keys.__next__(), data, ciphermod)
         self.test_hash_small(mac_name, mac_constructor, ciphermod.block_size)
